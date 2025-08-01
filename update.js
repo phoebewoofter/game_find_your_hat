@@ -42,11 +42,19 @@ class Field {
       if (userPath.toLowerCase() === "exit") {
         break; // Exit the loop
       }
-      /* if (userPath === 'j') {
+      
+      if (userPath === 'j') {
+        horizontalPath += 1;
       } else if (userPath === 'l') {
-       } */
+        horizontalPath -= 1;
+      } else if (userPath === 'i') {
+        verticalPath += 1;
+      } else if (userPath === 'k') {
+        verticalPath -= 1;
+      }
+
       // Handles cases when user selects 'j'
-      if (
+      /* if (
         userPath === "j" &&
         horizontalPath > 0 &&
         horizontalPath < this.fieldArray[1].length
@@ -137,7 +145,7 @@ class Field {
         break;
       }
     }
-  }
+  } */
 }
 
 const myField = new Field([
