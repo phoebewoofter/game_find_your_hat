@@ -53,6 +53,10 @@ class Field {
         verticalPath -= 1;
       }
 
+      if (horizontalPath < 0 || horizontalPath > this.fieldArray[1].length || verticalPath < 0 || verticalPath > this.fieldArray.length) {
+        console.log('Oops! You moved outside the field!');
+        break;
+      }
       // Handles cases when user selects 'j'
       /* if (
         userPath === "j" &&
