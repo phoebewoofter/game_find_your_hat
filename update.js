@@ -42,7 +42,9 @@ class Field {
       if (userPath.toLowerCase() === "exit") {
         break; // Exit the loop
       }
-
+      /* if (userPath === 'j') {
+      } else if (userPath === 'l') {
+       } */
       // Handles cases when user selects 'j'
       if (
         userPath === "j" &&
