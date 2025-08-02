@@ -1,4 +1,6 @@
 ## Find Your Hat!
 This `JavaScript` terminal game is a practice project as part of my classes on Codecademy. 
-Still working out kinks, like instead of resetting to the same field each time, a new iteration appears for each game.
-And, that each iteration is able to be solved!
+There are two versions: main.js is my first attempt when I'd just started coding. update.js is my current logic to avoid repetition and increase clarity.
+To be implemented: 
+Ensure each iteration is solveable 
+
