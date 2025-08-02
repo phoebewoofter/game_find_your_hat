@@ -23,7 +23,16 @@ class Field {
   );
 
   newField[0][0] = pathCharacter;
-  newField[Math.floor(Math.random() * height)][Math.floor(Math.random() * width)] = hat;
+  
+  let hatPlaced = false;
+  while (!hatPlaced) {
+    let hatY = Math.floor(Math.random() * height);
+    let hatX = Math.floor(Math.random() * width);
+    if (hatY !== 0 || hatX !== 0) {
+      newField[hatY][hatX] = hat;
+      hatPlaced = true;
+    }
+  }
 
   this.fieldArray = newField; // <<-- Important!
 }
