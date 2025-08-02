@@ -109,7 +109,6 @@ playGame() {
   }
 }
 
-
 const myField = new Field([
   ["*", "░", "O"],
   ["░", "O", "░"],
