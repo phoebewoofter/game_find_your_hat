@@ -23,7 +23,7 @@ class Field {
   );
 
   newField[0][0] = pathCharacter;
-  
+
   let hatPlaced = false;
   while (!hatPlaced) {
     let hatY = Math.floor(Math.random() * height);
@@ -43,7 +43,7 @@ playGame() {
   let verticalPath = 0;
 
   while (true) {
-    console.clear(); // Optional: clears terminal for cleaner display
+    console.clear(); // Clears terminal for cleaner display
     this.print();
 
     const userPath = prompt('Move j: left, i: up, k: down, l: right, or "exit": ');
@@ -53,9 +53,11 @@ playGame() {
       break;
     }
 
+    // Tracks user movement through each loop
     let newX = horizontalPath;
     let newY = verticalPath;
 
+    // Handles user movement
     if (userPath === 'j') newX -= 1;
     else if (userPath === 'l') newX += 1;
     else if (userPath === 'i') newY -= 1;
@@ -77,6 +79,7 @@ playGame() {
       break;
     }
 
+    // Checks whether user fell in hole or found hat
     const tile = this.fieldArray[newY][newX];
 
     if (tile === hole) {
@@ -89,7 +92,7 @@ playGame() {
       break;
     }
 
-    // Update position and mark path
+    // Updates position and marks path
     horizontalPath = newX;
     verticalPath = newY;
     this.fieldArray[verticalPath][horizontalPath] = pathCharacter;
