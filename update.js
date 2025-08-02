@@ -28,129 +28,75 @@ class Field {
   this.fieldArray = newField; // <<-- Important!
 }
 
-  playGame() {
-    this.generateField(3, 5);
+playGame() {
+  this.generateField(3, 5);
+  let horizontalPath = 0;
+  let verticalPath = 0;
+
+  while (true) {
+    console.clear(); // Optional: clears terminal for cleaner display
     this.print();
-    let horizontalPath = 0;
-    let verticalPath = 0;
 
-    let userPath;
-    while (true) {
-      userPath = prompt(
-        'Which way? Use jikl to move or type "exit" to quit): '
-      );
-      if (userPath.toLowerCase() === "exit") {
-        break; // Exit the loop
-      }
-      
-      if (userPath === 'j') {
-        horizontalPath += 1;
-      } else if (userPath === 'l') {
-        horizontalPath -= 1;
-      } else if (userPath === 'i') {
-        verticalPath += 1;
-      } else if (userPath === 'k') {
-        verticalPath -= 1;
-      }
+    const userPath = prompt('Move j: left, i: up, k: down, l: right, or "exit": ');
 
-      if (horizontalPath < 0 || horizontalPath > this.fieldArray[1].length || verticalPath < 0 || verticalPath > this.fieldArray.length) {
-        console.log('Oops! You moved outside the field!');
-        break;
-      }
-      // Handles cases when user selects 'j'
-      /* if (
-        userPath === "j" &&
-        horizontalPath > 0 &&
-        horizontalPath < this.fieldArray[1].length
-      ) {
-        horizontalPath -= 1;
-
-        // Handles cases for each option of hat, hole, or field character
-        if (this.fieldArray[verticalPath][horizontalPath] === hat) {
-          console.log("You found your hat!");
-          playGame();
-        } else if (this.fieldArray[verticalPath][horizontalPath] === hole) {
-          console.log("Oops! You fell in a hole!");
-          break;
-        } else if (
-          this.fieldArray[verticalPath][horizontalPath] === fieldCharacter
-        ) {
-          this.fieldArray[verticalPath][horizontalPath] = pathCharacter;
-          this.print();
-        }
-      } else if (userPath === "j" && horizontalPath === 0) {
-        console.log("You moved outside the field!");
-        break;
-      } // Handles cases when user selects 'l'
-      else if (
-        userPath === "l" &&
-        horizontalPath === this.fieldArray[1].length
-      ) {
-        console.log("You moved outside the field!");
-        break;
-      } else if (
-        userPath === "l" &&
-        horizontalPath < this.fieldArray[1].length
-      ) {
-        horizontalPath += 1;
-
-        // Handles cases for each option of hat, hole, or field character
-        if (this.fieldArray[verticalPath][horizontalPath] === hat) {
-          console.log("You found your hat!");
-          break;
-        } else if (this.fieldArray[verticalPath][horizontalPath] === hole) {
-          console.log("Oops! You fell in a hole!");
-          break;
-        } else if (
-          this.fieldArray[verticalPath][horizontalPath] === fieldCharacter
-        ) {
-          this.fieldArray[verticalPath][horizontalPath] = pathCharacter;
-          this.print();
-        }
-      } // Handles cases when user selects 'i'
-      else if (userPath === "i" && verticalPath > 0) {
-        verticalPath -= 1;
-
-        // Handles cases for each option of hat, hole, or field character
-        if (this.fieldArray[verticalPath][horizontalPath] === hat) {
-          console.log("You found your hat!");
-          break;
-        } else if (this.fieldArray[verticalPath][horizontalPath] === hole) {
-          console.log("Oops! You fell in a hole!");
-          break;
-        } else if (
-          this.fieldArray[verticalPath][horizontalPath] === fieldCharacter
-        ) {
-          this.fieldArray[verticalPath][horizontalPath] = pathCharacter;
-          this.print();
-        }
-      } else if (userPath === "i" && verticalPath === 0) {
-        console.log("You moved outside the field!");
-        break;
-      } // Handles cases when user selects 'k'
-      else if (userPath === "k" && verticalPath < this.fieldArray.length) {
-        verticalPath += 1;
-
-        // Handles cases for each option of hat, hole, or field character
-        if (this.fieldArray[verticalPath][horizontalPath] === hat) {
-          console.log("You found your hat!");
-          break;
-        } else if (this.fieldArray[verticalPath][horizontalPath] === hole) {
-          console.log("Oops! You fell in a hole!");
-          break;
-        } else if (
-          this.fieldArray[verticalPath][horizontalPath] === fieldCharacter
-        ) {
-          this.fieldArray[verticalPath][horizontalPath] = pathCharacter;
-          this.print();
-        }
-      } else if (userPath === "k" && verticalPath === this.fieldArray.length) {
-        console.log("You moved outside the field!");
-        break;
-      }
+    if (userPath.toLowerCase() === 'exit') {
+      console.log("Thanks for playing!");
+      break;
     }
-  } */
+
+    let newX = horizontalPath;
+    let newY = verticalPath;
+
+    if (userPath === 'j') newX -= 1;
+    else if (userPath === 'l') newX += 1;
+    else if (userPath === 'i') newY -= 1;
+    else if (userPath === 'k') newY += 1;
+    else {
+      console.log('Invalid input.');
+      continue;
+    }
+
+    // Check bounds
+    if (
+      newX < 0 ||
+      newX >= this.fieldArray[0].length ||
+      newY < 0 ||
+      newY >= this.fieldArray.length
+    ) {
+      console.log('Out of bounds!');
+      this.playAgain();
+      break;
+    }
+
+    const tile = this.fieldArray[newY][newX];
+
+    if (tile === hole) {
+      console.log('You fell into a hole!');
+      this.playAgain();
+      break;
+    } else if (tile === hat) {
+      console.log('You found your hat!');
+      this.playAgain();
+      break;
+    }
+
+    // Update position and mark path
+    horizontalPath = newX;
+    verticalPath = newY;
+    this.fieldArray[verticalPath][horizontalPath] = pathCharacter;
+  }
 }
+
+  playAgain() {
+    let playAgain = prompt('Play again? y/n: ');
+    if (playAgain === 'y') {
+      this.playGame();
+    } else {
+      process.exit(1);
+    }
+  }
+}
+
 
 const myField = new Field([
   ["*", "░", "O"],
