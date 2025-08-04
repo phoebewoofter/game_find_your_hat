@@ -104,6 +104,7 @@ playGame() {
     if (playAgain === 'y') {
       this.playGame();
     } else {
+      console.log('Thanks for playing!');
       process.exit(1);
     }
   }
