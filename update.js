@@ -37,8 +37,35 @@ class Field {
   this.fieldArray = newField; // <<-- Important!
 }
 
+isSolveable(field) {
+  let visited = Array.from({ length: field.length }, () => Array.from({ length: field[0].length }).fill(false));
+
+  function dfs(y, x) {
+    // Out of bounds
+    if (y < 0 || y >= visited.length || x < 0 || x >= visited[0].length) return false;
+    // Already visited or falls in a hole
+    if (visited[y][x] || field[y][x] === hole) return false;
+    // Finds possible path
+    if (field[y][x] === hat) return true;
+
+    visited[y][x] = true;
+
+    // Explore all directions
+    return (
+      dfs(y - 1, x) || // up
+      dfs(y + 1, x) || // down
+      dfs(y, x - 1) || // left
+      dfs(y, x + 1)    // right
+    );
+  }
+    return dfs(0, 0);
+  }
+
 playGame() {
+  do {
   this.generateField(3, 5);
+  } while (!this.isSolveable(this.fieldArray));
+
   let horizontalPath = 0;
   let verticalPath = 0;
 
